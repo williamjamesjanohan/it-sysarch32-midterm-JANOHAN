@@ -6,9 +6,13 @@ const mongoose = require('mongoose');
 
 const productRoutes = require('./api/routes/products')
 const orderRoutes = require('./api/routes/orders')
+const userRoutes = require('./api/routes/user');
 
 mongoose.connect('mongodb+srv://williamjamesjanohan1997:qq8Np9fayEPnLK2Y@cluster0.7nzasbh.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
+mongoose.Promise = global.Promise;
+
 app.use(morgan('dev'))
+app.use('/uploads',express.static('uploads'))
 app.use(bodyParder.urlencoded({extended:false}))
 app.use(bodyParder.json())
 
@@ -25,6 +29,7 @@ app.use((req,res,next)=>{
 
 app.use('/products', productRoutes)
 app.use('/orders', orderRoutes)
+app.use("/user", userRoutes);
 
 app.use((req, res, next)=>{
     const error = new Error('Not found')
